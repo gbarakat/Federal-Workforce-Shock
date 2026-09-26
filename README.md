@@ -5,7 +5,7 @@ In 2025 the US federal civilian workforce was hit by a policy-driven shock: the 
 **Stack:** Python (DuckDB, pmdarima, statsmodels, scikit-learn) for data engineering and modelling, Power BI for the report.
 **Data:** OPM record-level employment, separations and accessions files, Dec 2023 to Jul 2026 (32 monthly snapshots, ~2.3M employees).
 
-> **Status: work in progress.** The data pipeline and all models are complete. The Power BI report is being built page by page against the design mockups below. See [CHANGELOG.md](CHANGELOG.md) for day-to-day progress.
+> **Status: work in progress.** The data pipeline and all models are complete. The Power BI report is being built page by page against the design mockups below. See the [commit history](https://github.com/gbarakat/Federal-Workforce-Shock/commits/main) for day-to-day progress.
 
 ![Shock Overview page design](Federal_Workforce_Shock_Dashboard/Slide1.JPG)
 
@@ -56,9 +56,8 @@ Segment-risk and pay results are held back until a data-coverage issue is fixed.
 ├── model_outputs/                          Model results for Power BI (Parquet)
 ├── Federal_Workforce_Shock_Dashboard/      Page design mockups (images)
 ├── Federal_Workforce_Shock_Dashboard.pptx  Design mockup deck
-├── scripts/daily-commit.ps1                Log, commit and push the day's work
-├── requirements.txt
-└── CHANGELOG.md
+├── scripts/daily-commit.ps1                Commit and push the day's work
+└── requirements.txt
 ```
 
 These are not in the repo and are rebuilt locally: `Data/` (57 GB of raw OPM text files), `parquet/` (~3 GB), and `opm.duckdb`.
@@ -118,7 +117,7 @@ Facts join to `dim_date` on `yyyymm` and to `dim_agency` on `agency_code`.
 
 ## Day-to-day workflow
 
-To log the day's work in `CHANGELOG.md`, commit everything and push to GitHub, run:
+To commit everything and push it to GitHub, run the script below. The commit message is the day's log entry, so say what changed:
 
 ```bash
 powershell -ExecutionPolicy Bypass -File scripts\daily-commit.ps1 "Built KPI cards on Shock Overview"

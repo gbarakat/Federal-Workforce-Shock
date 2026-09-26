@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Log today's work in CHANGELOG.md, commit everything and push to GitHub.
+    Commit everything with a message describing today's work and push to GitHub.
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File scripts\daily-commit.ps1 "Built KPI cards on Shock Overview"
@@ -37,22 +37,6 @@ if (-not $Message) {
     Write-Host 'A message is required.' -ForegroundColor Red
     exit 1
 }
-
-# Add the message under today's heading in CHANGELOG.md (newest first)
-$log = Join-Path (Get-Location) 'CHANGELOG.md'
-$lines = [System.Collections.Generic.List[string]]::new([string[]][System.IO.File]::ReadAllLines($log))
-$heading = '## ' + (Get-Date -Format 'yyyy-MM-dd')
-$idx = $lines.IndexOf($heading)
-if ($idx -ge 0) {
-    $lines.Insert($idx + 1, "- $Message")
-} else {
-    $at = $lines.Count
-    for ($i = 0; $i -lt $lines.Count; $i++) {
-        if ($lines[$i].StartsWith('## ')) { $at = $i; break }
-    }
-    $lines.InsertRange($at, [string[]]@($heading, "- $Message", ''))
-}
-[System.IO.File]::WriteAllLines($log, $lines, (New-Object System.Text.UTF8Encoding $false))
 
 git add -A
 git commit -m $Message
