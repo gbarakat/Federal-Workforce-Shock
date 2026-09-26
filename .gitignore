@@ -1,0 +1,18 @@
+# --- Raw data (57 GB of OPM extracts) - download from data.opm.gov, never commit ---
+Data/
+raw/
+
+# --- Intermediate / regenerable artifacts ---
+parquet/
+*.duckdb
+*.duckdb.wal
+
+# --- Python ---
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+
+# --- Office / OS temp files ---
+~$*
+Thumbs.db
+desktop.ini
